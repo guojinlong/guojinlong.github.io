@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        使用hexo在github搭建博客｜Guojinlong&#39;s blog
+        Node中module.exports和exports｜Guojinlong&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="http://blog.guojinlong.me/2017/03/12/create-blog/">
+    <link rel="canonical" href="http://blog.guojinlong.me/2017/03/13/20170313-export/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -128,13 +128,13 @@
 
 
 <img class="wechat-title-img"
-     src="http://oc91dzfkp.bkt.clouddn.com/banner.jpg">
+     src="http://oc91dzfkp.bkt.clouddn.com/cat.jpg">
 
 
 <style>
     
     header.intro-header {
-        background-image: url('http://oc91dzfkp.bkt.clouddn.com/banner.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
+        background-image: url('http://oc91dzfkp.bkt.clouddn.com/cat.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
     }
 
     
@@ -145,18 +145,18 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>使用hexo在github搭建博客</h1>
+                    <h1>Node中module.exports和exports</h1>
                     
                     <span class="meta">
                          作者 Guo Jinlong
                         <span>
-                          日期 2017-03-12
+                          日期 2017-03-13
                          </span>
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#blog"
-                           title="blog">blog</a>
+                        <a class="tag" href="/tags/#Node.js"
+                           title="Node.js">Node.js</a>
                         
                     </div>
                 </div>
@@ -165,7 +165,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            使用hexo在github搭建博客
+            Node中module.exports和exports
         </span>
     </div>
 </header>
@@ -177,50 +177,34 @@
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
                 <blockquote>
-<ul>
-<li>博客使用Markdown语法</li>
-<li>会基本的git操作</li>
-<li>使用hexo创建博客内容</li>
-</ul>
+<p>node作为运行在服务端运行的javascript语言，对模块化的要求会变得急迫。相对于java中的类文件和包机制，Ruby的require，如果还是用 &lt; script &gt; 方式引入代码就会有那么些许尴尬。</p>
 </blockquote>
+<h3 id="npm和CommonJS"><a href="#npm和CommonJS" class="headerlink" title="npm和CommonJS"></a>npm和CommonJS</h3><p>node使用npm作为包管理工具。npm遵循CommonJS规范，关于JS的规范可以单独用一个话题来讲，这里暂不做描述。<br>CommonJS对规范的定义很简单。分为 <strong>模块引用</strong>、<strong>模块定义</strong>和<strong>模块标识</strong>三个部门。<br><strong>模块引用</strong><br><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> math = <span class="built_in">require</span>(<span class="string">'math'</span>);</div></pre></td></tr></table></figure></p>
+<p><strong>模块定义</strong><br><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// math.js</span></div><div class="line"><span class="built_in">module</span>.exports.add = <span class="function"><span class="keyword">function</span>(<span class="params">a, b</span>)</span>&#123;</div><div class="line">	<span class="keyword">return</span> a+b;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>模块标识</strong><br>模块的标识就是传递给require方法的参数。它需要符合小驼峰命名或者是用相对路径或者绝对路径开头。</p>
+<p><strong>意义：</strong>使用这样的定义方式，将类聚的方法和变量等限定在私有的作用域中，每个模块都有独立的空间，互不干扰。</p>
+<h3 id="module-和-exports"><a href="#module-和-exports" class="headerlink" title="module 和 exports"></a>module 和 exports</h3><p>在上面的代码中我们看到了module，这个无中生有的对象。当然这是node内部提供的一个内建对象。所有的模块都会有一个Module对象。代表当前模块。有如下属性：</p>
+<blockquote>
+<p>module.id 模块的识别符，通常是带有绝对路径的模块文件名。<br>module.filename 模块的文件名，带有绝对路径。<br>module.loaded 返回一个布尔值，表示模块是否已经完成&gt; 加载。<br>module.parent 返回一个对象，表示调用该模块的模块。<br>module.children 返回一个数组，表示该模块要用到的其他模块。<br>module.exports 表示模块对外输出的值。</p>
 <hr>
-<h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><ol>
-<li>安装git和nodejs环境</li>
-<li>注册好github同时将本地的git配置好</li>
-</ol>
-<h3 id="创建blog"><a href="#创建blog" class="headerlink" title="创建blog"></a>创建blog</h3><ol>
-<li>在github上创建一个叫xxx.github.io的respository。（xxx就是你注册github的用户名）</li>
-<li>然后将你的项目下载到本地（项目名以blog为例）</li>
-<li>在使用hexo创建blog系统之前需要在本地安装 hexo-cli<figure class="highlight powershell"><table><tr><td class="code"><pre><div class="line">npm install hexo-cli -g</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<ol>
-<li><p>进入到blog目录初始化项目</p>
-<figure class="highlight powershell"><table><tr><td class="code"><pre><div class="line">hexo init</div></pre></td></tr></table></figure>
-</li>
-<li><p>执行 hexo server命令看到如下结果<br><img src="./hexo-s-result.png" alt="Alt text"></p>
-</li>
-<li>预览 <a href="http://localhost:4000/" target="_blank" rel="external">http://localhost:4000/</a> 结果。至此项目初始化完成<br><img src="./dev-preview.png" alt="Alt text"></li>
-</ol>
+<p>module.exports属性表示当前模块对外输出的接口，其他文件加载该模块，实际上就是读取module.exports变量。</p>
+</blockquote>
+<h3 id="一个衍生品exports"><a href="#一个衍生品exports" class="headerlink" title="一个衍生品exports"></a>一个衍生品exports</h3><p>为了方便，Node为每个模块提供一个exports变量，指向module.exports。这等同在每个模块头部，有一行这样的命令。<br><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> exports = <span class="built_in">module</span>.exports;</div></pre></td></tr></table></figure></p>
+<p>所以如果出现如下的写法可能会导致exports下挂载的对象或者变量无效。<br><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">exports.hello = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="string">'hello'</span>;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = <span class="string">'Hello world'</span>;</div></pre></td></tr></table></figure></p>
+<p>同时下面的写法也会出问题<br><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">exports = <span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123;<span class="built_in">console</span>.log(x)&#125;;<span class="comment">//切断了exports与module.exports的联系</span></div></pre></td></tr></table></figure></p>
+<p>如果你觉得，exports与module.exports之间的区别很难分清，一个简单的处理方法，就是放弃使用exports，只使用module.exports。</p>
 
                 <hr>
                 
                 <!-- 多说 Share start -->
                 <div class="ds-share"
                      style="text-align: right"
-                     data-thread-key="2017/03/12/create-blog/"
-                     data-title="使用hexo在github搭建博客"
-                     data-url="http://blog.guojinlong.me/2017/03/12/create-blog/"
-                     data-images="http://blog.guojinlong.me/2017/03/12/create-blog/http://oc91dzfkp.bkt.clouddn.com/banner.jpg"
+                     data-thread-key="2017/03/13/20170313-export/"
+                     data-title="Node中module.exports和exports"
+                     data-url="http://blog.guojinlong.me/2017/03/13/20170313-export/"
+                     data-images="http://blog.guojinlong.me/2017/03/13/20170313-export/http://oc91dzfkp.bkt.clouddn.com/cat.jpg"
                      data-content="
-
-博客使用Markdown语法
-会基本的git操作
-使用hexo创建博客内容
-
-
-
-环境准备... | Guojinlong&#39;s blog ">
+node作为运行在服务端运行的javascript语言，对模块化的要求会变得急迫。相对于ja... | Guojinlong&#39;s blog ">
                     <div class="ds-share-inline">
                         <ul class="ds-share-icons-16">
                             <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -238,15 +222,10 @@
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2017/03/13/20170313-export/" data-toggle="tooltip" data-placement="top"
-                           title="Node中module.exports和exports">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2017/03/12/test/" data-toggle="tooltip" data-placement="top"
-                           title="test">Next Post &rarr;</a>
+                        <a href="/2017/03/12/create-blog/" data-toggle="tooltip" data-placement="top"
+                           title="使用hexo在github搭建博客">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -255,9 +234,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                         data-thread-key="2017/03/12/create-blog/"
-                         data-title="使用hexo在github搭建博客"
-                         data-url="http://blog.guojinlong.me/2017/03/12/create-blog/">
+                         data-thread-key="2017/03/13/20170313-export/"
+                         data-title="Node中module.exports和exports"
+                         data-url="http://blog.guojinlong.me/2017/03/13/20170313-export/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -269,7 +248,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#环境准备"><span class="toc-text">环境准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建blog"><span class="toc-text">创建blog</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#npm和CommonJS"><span class="toc-text">npm和CommonJS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#module-和-exports"><span class="toc-text">module 和 exports</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一个衍生品exports"><span class="toc-text">一个衍生品exports</span></a></li></ol>
                 </div>
             </div>
         </div>
@@ -291,8 +270,8 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#blog"
-                           title="blog">blog</a>
+                        <a class="tag" href="/tags/#Node.js"
+                           title="Node.js">Node.js</a>
                         
                     </div>
                 </section>

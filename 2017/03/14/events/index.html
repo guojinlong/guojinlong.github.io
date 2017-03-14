@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        Node中module.exports和exports｜Guojinlong&#39;s blog
+        events模块｜Guojinlong&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="http://blog.guojinlong.me/2017/03/13/20170313-export/">
+    <link rel="canonical" href="http://blog.guojinlong.me/2017/03/14/events/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -130,13 +130,13 @@
 
 
 <img class="wechat-title-img"
-     src="http://oc91dzfkp.bkt.clouddn.com/cat.jpg">
+     src="http://oc91dzfkp.bkt.clouddn.com/blog/3.14.jpg">
 
 
 <style>
     
     header.intro-header {
-        background-image: url('http://oc91dzfkp.bkt.clouddn.com/cat.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
+        background-image: url('http://oc91dzfkp.bkt.clouddn.com/blog/3.14.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
     }
 
     
@@ -147,12 +147,12 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>Node中module.exports和exports</h1>
+                    <h1>events模块</h1>
                     
                     <span class="meta">
                          作者 Guo Jinlong
                         <span>
-                          日期 2017-03-13
+                          日期 2017-03-14
                          </span>
                     </span>
                     <div class="tags text-center">
@@ -167,7 +167,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            Node中module.exports和exports
+            events模块
         </span>
     </div>
 </header>
@@ -179,34 +179,32 @@
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
                 <blockquote>
-<p>node作为运行在服务端运行的javascript语言，对模块化的要求会变得急迫。相对于java中的类文件和包机制，Ruby的require，如果还是用 &lt; script &gt; 方式引入代码就会有那么些许尴尬。</p>
+<p>回调函数模式让 Node 可以处理异步操作。但是，为了适应回调函数，异步操作只能有两个状态：开始和结束。对于那些多状态的异步操作（状态1，状态2，状态3，……），回调函数就会无法处理，你不得不将异步操作拆开，分成多个阶段。每个阶段结束时，调用下一个回调函数。<br>为了解决这个问题，Node 提供 Event Emitter 接口。通过事件，解决多状态异步操作的响应问题。<br>———《JavaScript标准参考教程》</p>
 </blockquote>
-<h3 id="npm和CommonJS"><a href="#npm和CommonJS" class="headerlink" title="npm和CommonJS"></a>npm和CommonJS</h3><p>node使用npm作为包管理工具。npm遵循CommonJS规范，关于JS的规范可以单独用一个话题来讲，这里暂不做描述。<br>CommonJS对规范的定义很简单。分为 <strong>模块引用</strong>、<strong>模块定义</strong>和<strong>模块标识</strong>三个部门。<br><strong>模块引用</strong><br><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> math = <span class="built_in">require</span>(<span class="string">'math'</span>);</div></pre></td></tr></table></figure></p>
-<p><strong>模块定义</strong><br><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// math.js</span></div><div class="line"><span class="built_in">module</span>.exports.add = <span class="function"><span class="keyword">function</span>(<span class="params">a, b</span>)</span>&#123;</div><div class="line">	<span class="keyword">return</span> a+b;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><strong>模块标识</strong><br>模块的标识就是传递给require方法的参数。它需要符合小驼峰命名或者是用相对路径或者绝对路径开头。</p>
-<p><strong>意义：</strong>使用这样的定义方式，将类聚的方法和变量等限定在私有的作用域中，每个模块都有独立的空间，互不干扰。</p>
-<h3 id="module-和-exports"><a href="#module-和-exports" class="headerlink" title="module 和 exports"></a>module 和 exports</h3><p>在上面的代码中我们看到了module，这个无中生有的对象。当然这是node内部提供的一个内建对象。所有的模块都会有一个Module对象。代表当前模块。有如下属性：</p>
-<blockquote>
-<p>module.id 模块的识别符，通常是带有绝对路径的模块文件名。<br>module.filename 模块的文件名，带有绝对路径。<br>module.loaded 返回一个布尔值，表示模块是否已经完成&gt; 加载。<br>module.parent 返回一个对象，表示调用该模块的模块。<br>module.children 返回一个数组，表示该模块要用到的其他模块。<br>module.exports 表示模块对外输出的值。</p>
-<hr>
-<p>module.exports属性表示当前模块对外输出的接口，其他文件加载该模块，实际上就是读取module.exports变量。</p>
-</blockquote>
-<h3 id="一个衍生品exports"><a href="#一个衍生品exports" class="headerlink" title="一个衍生品exports"></a>一个衍生品exports</h3><p>为了方便，Node为每个模块提供一个exports变量，指向module.exports。这等同在每个模块头部，有一行这样的命令。<br><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> exports = <span class="built_in">module</span>.exports;</div></pre></td></tr></table></figure></p>
-<p>所以如果出现如下的写法可能会导致exports下挂载的对象或者变量无效。<br><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">exports.hello = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="string">'hello'</span>;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = <span class="string">'Hello world'</span>;</div></pre></td></tr></table></figure></p>
-<p>同时下面的写法也会出问题<br><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">exports = <span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123;<span class="built_in">console</span>.log(x)&#125;;<span class="comment">//切断了exports与module.exports的联系</span></div></pre></td></tr></table></figure></p>
-<p>如果你觉得，exports与module.exports之间的区别很难分清，一个简单的处理方法，就是放弃使用exports，只使用module.exports。</p>
+<h3 id="1-Event-Emitter"><a href="#1-Event-Emitter" class="headerlink" title="1.Event Emitter"></a>1.Event Emitter</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="meta">'use strict'</span></div><div class="line"><span class="keyword">const</span> EventEmitter =  <span class="built_in">require</span>(<span class="string">'events'</span>).EventEmitter;</div><div class="line"><span class="keyword">const</span> emitter =  <span class="keyword">new</span> EventEmitter();</div><div class="line"></div><div class="line">emitter.on(<span class="string">'test'</span>, ()=&gt;&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'test&gt;&gt;&gt;&gt;'</span>);</div><div class="line">&#125;)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'&gt;&gt;&gt;&gt;1'</span>);</div><div class="line">  emitter.emit(<span class="string">'test'</span>);</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'&gt;&gt;&gt;&gt;&gt;2'</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">f();</div><div class="line"><span class="comment">//这是一段同步执行的代码</span></div></pre></td></tr></table></figure>
+<h3 id="2-Event-Emitter-接口的部署"><a href="#2-Event-Emitter-接口的部署" class="headerlink" title="2.Event Emitter 接口的部署"></a>2.Event Emitter 接口的部署</h3><p>Emitter接口可以部署在任何对象上，然后使这些对象可以订阅和发布消息。<br>同时在util模块中有inherits方法也提供了类型是的继承方法。<br><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">util.inherits(对象, EventEmitter);</div></pre></td></tr></table></figure></p>
+<h3 id="3-Event-Emitter-的实例方法"><a href="#3-Event-Emitter-的实例方法" class="headerlink" title="3.Event Emitter 的实例方法"></a>3.Event Emitter 的实例方法</h3><ul>
+<li><strong>emitter.on(name, f)</strong> 对事件name指定监听函数f</li>
+<li><strong>emitter.emit(name, a1,a2…)</strong> 用来触发事件。它的第一个参数是事件名称，其余参数都会依次传入回调函数。</li>
+<li><strong>emitter.once(name, f)</strong> 与on方法类似，但是监听函数f是一次性的，使用后自动移除</li>
+<li><strong>emitter.emitter.removeListener(name, f)</strong> 该方法用于移除回调函数。它接受两个参数，第一个是事件名称，第二个是回调函数名称。这就是说，不能用于移除匿名函数。</li>
+<li><strong>emitter.setMaxListeners()</strong>  Node默认允许同一个事件最多可以指定10个回调函数。</li>
+<li><strong>emitter.removeAllListeners()</strong>  该方法用于移除某个事件的所有回调函数。</li>
+<li><strong>emitter.listeners()</strong> 方法接受一个事件名称作为参数，返回该事件所有回调函数组成的数组。</li>
+</ul>
+<p>未完待续。。。。</p>
 
                 <hr>
                 
                 <!-- 多说 Share start -->
                 <div class="ds-share"
                      style="text-align: right"
-                     data-thread-key="2017/03/13/20170313-export/"
-                     data-title="Node中module.exports和exports"
-                     data-url="http://blog.guojinlong.me/2017/03/13/20170313-export/"
-                     data-images="http://blog.guojinlong.me/2017/03/13/20170313-export/http://oc91dzfkp.bkt.clouddn.com/cat.jpg"
+                     data-thread-key="2017/03/14/events/"
+                     data-title="events模块"
+                     data-url="http://blog.guojinlong.me/2017/03/14/events/"
+                     data-images="http://blog.guojinlong.me/2017/03/14/events/http://oc91dzfkp.bkt.clouddn.com/blog/3.14.jpg"
                      data-content="
-node作为运行在服务端运行的javascript语言，对模块化的要求会变得急迫。相对于ja... | Guojinlong&#39;s blog ">
+回调函数模式让 Node 可以处理异步操作。但是，为了适应回调函数，异步操作只能有两个状态：... | Guojinlong&#39;s blog ">
                     <div class="ds-share-inline">
                         <ul class="ds-share-icons-16">
                             <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -224,15 +222,10 @@ node作为运行在服务端运行的javascript语言，对模块化的要求会
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2017/03/14/events/" data-toggle="tooltip" data-placement="top"
-                           title="events模块">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2017/03/12/create-blog/" data-toggle="tooltip" data-placement="top"
-                           title="使用hexo在github搭建博客">Next Post &rarr;</a>
+                        <a href="/2017/03/13/20170313-export/" data-toggle="tooltip" data-placement="top"
+                           title="Node中module.exports和exports">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -241,9 +234,9 @@ node作为运行在服务端运行的javascript语言，对模块化的要求会
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                         data-thread-key="2017/03/13/20170313-export/"
-                         data-title="Node中module.exports和exports"
-                         data-url="http://blog.guojinlong.me/2017/03/13/20170313-export/">
+                         data-thread-key="2017/03/14/events/"
+                         data-title="events模块"
+                         data-url="http://blog.guojinlong.me/2017/03/14/events/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -255,7 +248,7 @@ node作为运行在服务端运行的javascript语言，对模块化的要求会
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#npm和CommonJS"><span class="toc-text">npm和CommonJS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#module-和-exports"><span class="toc-text">module 和 exports</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一个衍生品exports"><span class="toc-text">一个衍生品exports</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Event-Emitter"><span class="toc-text">1.Event Emitter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Event-Emitter-接口的部署"><span class="toc-text">2.Event Emitter 接口的部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Event-Emitter-的实例方法"><span class="toc-text">3.Event Emitter 的实例方法</span></a></li></ol>
                 </div>
             </div>
         </div>

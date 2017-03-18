@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        Node中module.exports和exports｜Guojinlong&#39;s blog
+        javascript的模块化之路｜Guojinlong&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="http://blog.guojinlong.me/2017/03/13/20170313-export/">
+    <link rel="canonical" href="http://blog.guojinlong.me/2017/03/18/js-module/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -128,13 +128,13 @@
 
 
 <img class="wechat-title-img"
-     src="http://oc91dzfkp.bkt.clouddn.com/cat.jpg">
+     src="http://oc91dzfkp.bkt.clouddn.com/home-bg.jpg">
 
 
 <style>
     
     header.intro-header {
-        background-image: url('http://oc91dzfkp.bkt.clouddn.com/cat.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
+        background-image: url('http://oc91dzfkp.bkt.clouddn.com/home-bg.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
     }
 
     
@@ -145,12 +145,12 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>Node中module.exports和exports</h1>
+                    <h1>javascript的模块化之路</h1>
                     
                     <span class="meta">
                          作者 Guo Jinlong
                         <span>
-                          日期 2017-03-13
+                          日期 2017-03-18
                          </span>
                     </span>
                     <div class="tags text-center">
@@ -165,7 +165,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            Node中module.exports和exports
+            javascript的模块化之路
         </span>
     </div>
 </header>
@@ -177,34 +177,57 @@
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
                 <blockquote>
-<p>node作为运行在服务端运行的javascript语言，对模块化的要求会变得急迫。相对于java中的类文件和包机制，Ruby的require，如果还是用 &lt; script &gt; 方式引入代码就会有那么些许尴尬。</p>
+<p>模块化是js中时常被讨论的一个话题，同时模块化也是一门编程语言重要的组成部分。松散耦合的编程方式可以让代码的维护性能得到大大的提升。<br>装逼一点说，可能模块化就是要让一些js代码片段可以成为更好的独立个体。</p>
 </blockquote>
-<h3 id="npm和CommonJS"><a href="#npm和CommonJS" class="headerlink" title="npm和CommonJS"></a>npm和CommonJS</h3><p>node使用npm作为包管理工具。npm遵循CommonJS规范，关于JS的规范可以单独用一个话题来讲，这里暂不做描述。<br>CommonJS对模块的定义很简单。分为 <strong>模块引用</strong>、<strong>模块定义</strong>和<strong>模块标识</strong>三个部门。<br><strong>模块引用</strong><br><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> math = <span class="built_in">require</span>(<span class="string">'math'</span>);</div></pre></td></tr></table></figure></p>
-<p><strong>模块定义</strong><br><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// math.js</span></div><div class="line"><span class="built_in">module</span>.exports.add = <span class="function"><span class="keyword">function</span>(<span class="params">a, b</span>)</span>&#123;</div><div class="line">	<span class="keyword">return</span> a+b;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p><strong>模块标识</strong><br>模块的标识就是传递给require方法的参数。它需要符合小驼峰命名或者是用相对路径或者绝对路径开头。</p>
-<p><strong>意义：</strong>使用这样的定义方式，将类聚的方法和变量等限定在私有的作用域中，每个模块都有独立的空间，互不干扰。</p>
-<h3 id="module-和-exports"><a href="#module-和-exports" class="headerlink" title="module 和 exports"></a>module 和 exports</h3><p>在上面的代码中我们看到了module，这个无中生有的对象。当然这是node内部提供的一个内建对象。所有的模块都会有一个Module对象。代表当前模块。有如下属性：</p>
+<h2 id="1-js的模块化血泪史"><a href="#1-js的模块化血泪史" class="headerlink" title="1. js的模块化血泪史"></a>1. js的模块化血泪史</h2><p>因为js语言的特性，它不存在class类，也没有模块化之说。就算是es中的class，更多的可能也只是语法糖。<br>但是随着js的发展壮大，模块化是一个迫切需要解决的问题，于是就诞生了很多方案。</p>
+<h3 id="1-最初（代码可能需要自行脑补。。。）"><a href="#1-最初（代码可能需要自行脑补。。。）" class="headerlink" title="1. 最初（代码可能需要自行脑补。。。）"></a>1. 最初（代码可能需要自行脑补。。。）</h3><p>从最初很简单我们将所有代码放到一个文件中开始。</p>
+<ol>
+<li>渐渐的我们发现其中有一些方法可能可以放到抽取出来放到a文件中去，然后再引用a文件。（<strong>致命缺陷：变量的全局污染和关系不明</strong>）</li>
+<li>于是就诞生了对象写法。将所有方法放到一个对象中。然后暴露对象，调用对象方法。（<strong>致命缺陷：对象的内部属性状态可以被改写，也就是不同引用其实都是使用的同一个对象</strong>）</li>
+<li>方法又来了，我们可以写一个立即执行函数，这样就可以保护一些属性变量。</li>
+<li>如果模块之间需要有一些关系，就需要用一些放大模式。在立即执行函数中传入原有模块，然后在原有模块中增加一些方法。</li>
+<li>因为加载顺序的不确定性，我们需要完善一下上一步，就是如果传入的模块不存在，需要加入一个空对象。</li>
+<li><strong>独立性</strong> 作为模块除了保护好自己，也尽量不去依赖别人，但是有时候对一些环境依赖又是必须的。（好比每个人都需要水和空气才能生存一样吧）于是我们就把”水和空气作为参数传进来吧”。</li>
+</ol>
+<h2 id="2-CommonJS和AMD"><a href="#2-CommonJS和AMD" class="headerlink" title="2. CommonJS和AMD"></a>2. CommonJS和AMD</h2><p>上面说的很多更多好像就是解决问题的方法（好比我们知道了方向），但是对于实现可以说有很多种（只要往哪那个方向就对了），于是就需要执行一些规范（大家现在决定在往那个方向上修两条主要高速公路），给这两条高速路起名叫CommonJS和AMD。</p>
+<h3 id="1-CommonJS"><a href="#1-CommonJS" class="headerlink" title="1.CommonJS"></a>1.CommonJS</h3><p>CommonJS作为规范的提出（此处应该装逼的放一个规范链接），可以说是js发展的重要的一步，因为有了这样的规范，可以写出具备夸宿主环境执行的能力，规范中包含模块、二进制、Buffer、字符集编码、I/O、进程环境、文件系统、套接字、单元测试、Web服务器网关接口、包管理等。这样就可以用js来开发服务端应用、命令行工具、桌面图形界面应用、混合应用等，这样js就可以认真的说自己也是一门后端语言（为多年前的自己洗白）。<br>很幸运就是Node.js就是使用CommonJS规范来实现。<a href="http://blog.guojinlong.me/2017/03/13/20170313-export/">关于Node中对CommonJS规范的模块实现的简介</a>。下面就看一下node的具体实现。</p>
+<h3 id="2-Node中的具体实现"><a href="#2-Node中的具体实现" class="headerlink" title="2. Node中的具体实现"></a>2. Node中的具体实现</h3><p>Node中在应用执行的时候模块的引用需要路径分析、文件定位、编译执行这些步骤。核心模块作为”关系户模块”在node进程启动的时候就被直接加载到内存，加载速度快，而且在路径分析的时候是最先判断的。<br>node中的模块可以分为两大类，<strong>核心模块（自带）</strong>和<strong>第三方模块</strong><br>在node中对引入的模块的引入需要分为下面三个步骤：</p>
+<ol>
+<li><p>路径分析<br> 前面有说到require(*)。首先就是要说到里面的标识符大致可以分为下面几类：</p>
 <blockquote>
-<p>module.id 模块的识别符，通常是带有绝对路径的模块文件名。<br>module.filename 模块的文件名，带有绝对路径。<br>module.loaded 返回一个布尔值，表示模块是否已经完成&gt; 加载。<br>module.parent 返回一个对象，表示调用该模块的模块。<br>module.children 返回一个数组，表示该模块要用到的其他模块。<br>module.exports 表示模块对外输出的值。</p>
-<hr>
-<p>module.exports属性表示当前模块对外输出的接口，其他文件加载该模块，实际上就是读取module.exports变量。</p>
+<ul>
+<li>核心模块(fs,http,path…)</li>
+<li>相对路径的文件模块(.或者..开始的)</li>
+<li>绝对路径的文件模块(/开始的)</li>
+<li>非路径的文件模块(express等)</li>
+</ul>
 </blockquote>
-<h3 id="一个衍生品exports"><a href="#一个衍生品exports" class="headerlink" title="一个衍生品exports"></a>一个衍生品exports</h3><p>为了方便，Node为每个模块提供一个exports变量，指向module.exports。这等同在每个模块头部，有一行这样的命令。<br><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> exports = <span class="built_in">module</span>.exports;</div></pre></td></tr></table></figure></p>
-<p>所以如果出现如下的写法可能会导致exports下挂载的对象或者变量无效。<br><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">exports.hello = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="string">'hello'</span>;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = <span class="string">'Hello world'</span>;</div></pre></td></tr></table></figure></p>
-<p>同时下面的写法也会出问题<br><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">exports = <span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123;<span class="built_in">console</span>.log(x)&#125;;<span class="comment">//切断了exports与module.exports的联系</span></div></pre></td></tr></table></figure></p>
-<p>如果你觉得，exports与module.exports之间的区别很难分清，一个简单的处理方法，就是放弃使用exports，只使用module.exports。</p>
+<ol>
+<li>在路径分析中，我们最开始要说到一个话题就是缓存模块，对于require()相同的模块的二次加载都会采用缓存优先的方式。</li>
+<li>缓存过后就是到核心模块寻找，因为核心模块是已经存在于内存，所以加载最快。</li>
+<li>相对路径文件，都会被转化为真实模块，并且把真实路径当做索引，在编译执行后放到缓存中作为二次加载。文件模块因为指定了路径，加载速度慢于核心模块。</li>
+<li>自定义或者第三方模块加载，这类文件以文件或者包的形式存在，相对上面的模块，此类模块加载比较耗时。<br>在说到此类加载之前，需要先说一下模块路径这个概念。这个是Node在定位文件模块时的查找方法。我们看一下全局module模块中有一个paths的变量。<img src="http://oc91dzfkp.bkt.clouddn.com/blog/content/module-path.png" alt="图1"><br>可以看到模块路径分析大致就是从当前目录一层一级向上寻找node_modules文件夹下的东东。后面的三个应该就是全局变量安装的文件模块路径。</li>
+<li>如果前面一切分析顺利，就到到了要找的文件夹下面了，这个时候应该在包中寻找一个入口文件吧，只有找到具体文件才算结束吧？node按照引入的文件名加上.js、.json、.node的拓展名依次尝试。</li>
+<li>如果这时候还没有找到文件，那node会按照CommonJS的规范，去寻找package.json文件中的main文件（没有扩展名还是会依次补上上面说的三个拓展名），尝试寻找。</li>
+<li>如果还是没有找到，那么node会默认一个文件名index然后依次按照三个拓展文件名再次寻找。</li>
+<li>如果还是不能找到。那只能手动摊手了。。。</li>
+</ol>
+</li>
+<li>文件定位<br>…</li>
+<li>编译执行<br>…</li>
+</ol>
 
                 <hr>
                 
                 <!-- 多说 Share start -->
                 <div class="ds-share"
                      style="text-align: right"
-                     data-thread-key="2017/03/13/20170313-export/"
-                     data-title="Node中module.exports和exports"
-                     data-url="http://blog.guojinlong.me/2017/03/13/20170313-export/"
-                     data-images="http://blog.guojinlong.me/2017/03/13/20170313-export/http://oc91dzfkp.bkt.clouddn.com/cat.jpg"
+                     data-thread-key="2017/03/18/js-module/"
+                     data-title="javascript的模块化之路"
+                     data-url="http://blog.guojinlong.me/2017/03/18/js-module/"
+                     data-images="http://blog.guojinlong.me/2017/03/18/js-module/http://oc91dzfkp.bkt.clouddn.com/home-bg.jpg"
                      data-content="
-node作为运行在服务端运行的javascript语言，对模块化的要求会变得急迫。相对于ja... | Guojinlong&#39;s blog ">
+模块化是js中时常被讨论的一个话题，同时模块化也是一门编程语言重要的组成部分。松散耦合的编程... | Guojinlong&#39;s blog ">
                     <div class="ds-share-inline">
                         <ul class="ds-share-icons-16">
                             <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -222,15 +245,10 @@ node作为运行在服务端运行的javascript语言，对模块化的要求会
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2017/03/14/events/" data-toggle="tooltip" data-placement="top"
-                           title="events模块">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2017/03/12/create-blog/" data-toggle="tooltip" data-placement="top"
-                           title="使用hexo在github搭建博客">Next Post &rarr;</a>
+                        <a href="/2017/03/16/js-data-type/" data-toggle="tooltip" data-placement="top"
+                           title="数据类型">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -239,9 +257,9 @@ node作为运行在服务端运行的javascript语言，对模块化的要求会
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                         data-thread-key="2017/03/13/20170313-export/"
-                         data-title="Node中module.exports和exports"
-                         data-url="http://blog.guojinlong.me/2017/03/13/20170313-export/">
+                         data-thread-key="2017/03/18/js-module/"
+                         data-title="javascript的模块化之路"
+                         data-url="http://blog.guojinlong.me/2017/03/18/js-module/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -253,7 +271,7 @@ node作为运行在服务端运行的javascript语言，对模块化的要求会
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#npm和CommonJS"><span class="toc-text">npm和CommonJS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#module-和-exports"><span class="toc-text">module 和 exports</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一个衍生品exports"><span class="toc-text">一个衍生品exports</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-js的模块化血泪史"><span class="toc-text">1. js的模块化血泪史</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-最初（代码可能需要自行脑补。。。）"><span class="toc-text">1. 最初（代码可能需要自行脑补。。。）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-CommonJS和AMD"><span class="toc-text">2. CommonJS和AMD</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-CommonJS"><span class="toc-text">1.CommonJS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Node中的具体实现"><span class="toc-text">2. Node中的具体实现</span></a></li></ol></li></ol>
                 </div>
             </div>
         </div>

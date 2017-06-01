@@ -80,7 +80,7 @@
                         
 							
                         <li>
-                            <a href="/tags/">tags</a>
+                            <a href="/books/">books</a>
                         </li>
 							
 						
@@ -88,7 +88,7 @@
                         
 							
                         <li>
-                            <a href="/books/">books</a>
+                            <a href="/tags/">tags</a>
                         </li>
 							
 						
@@ -198,15 +198,15 @@
 {&quot;x&quot; : new Date()}
 </code></pre><h4 id="6-正则表达式"><a href="#6-正则表达式" class="headerlink" title="6. 正则表达式"></a>6. 正则表达式</h4><pre><code>查询时，可以使用正则表达。
 </code></pre><h4 id="7-Array"><a href="#7-Array" class="headerlink" title="7. Array"></a>7. Array</h4><pre><code>MongoDB对数组的支持比较好。后续可以专门来讲下。
-{&quot;x&quot; : [&quot;1&quot;, &quot;a&quot;]}
-</code></pre><h4 id="8-内嵌文档"><a href="#8-内嵌文档" class="headerlink" title="8. 内嵌文档"></a>8. 内嵌文档</h4><pre><code>内嵌文档可以算作是MongoDB的一大特色吧。可以使的数据结构不是那么的扁平化，当然这样做的副作用就是导致数据重复，用的不好也是比较头疼的事。
-{&quot;x&quot; : {&quot;y&quot; : 1}}
-</code></pre><h4 id="9-对象id"><a href="#9-对象id" class="headerlink" title="9. 对象id"></a>9. 对象id</h4><pre><code>是一个12位字节24个十六进制数字组成的的ID。文档的唯一标识
+</code></pre><p>{“x” : [“1”, “a”]}</p>
+<h4 id="8-内嵌文档"><a href="#8-内嵌文档" class="headerlink" title="8. 内嵌文档"></a>8. 内嵌文档</h4><pre><code>内嵌文档可以算作是MongoDB的一大特色吧。可以使的数据结构不是那么的扁平化，当然这样做的副作用就是导致数据重复，的不好也是比较头疼的事。
+</code></pre><p>{“x” : {“y” : 1}}</p>
+<h4 id="9-对象id"><a href="#9-对象id" class="headerlink" title="9. 对象id"></a>9. 对象id</h4><pre><code>是一个12位字节24个十六进制数字组成的的ID。文档的唯一标识
 {&quot;x&quot;: ObjectId()}
 0 |1 |2 |3 |4 |5 |6 |7 |8 |9 |10 |11 |
- 时间戳  | 机器    |    PID   |    计数器
-</code></pre><p>还有两种不常用的类型，日常开发几乎不会用：</p>
-<h4 id="10-二进制数组"><a href="#10-二进制数组" class="headerlink" title="10. 二进制数组"></a>10. 二进制数组</h4><h4 id="11-代码"><a href="#11-代码" class="headerlink" title="11. 代码"></a>11. 代码</h4><pre><code>这种用法还真没怎么使用过。
+时间戳  | 机器    |    PID   |    计数器
+还有两种不常用的类型，日常开发几乎不会用：
+</code></pre><h4 id="10-二进制数组"><a href="#10-二进制数组" class="headerlink" title="10. 二进制数组"></a>10. 二进制数组</h4><h4 id="11-代码"><a href="#11-代码" class="headerlink" title="11. 代码"></a>11. 代码</h4><pre><code>这种用法还真没怎么使用过。
 </code></pre>
                 <hr>
                 

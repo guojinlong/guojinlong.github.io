@@ -22,7 +22,7 @@
         
     </title>
 
-    <link rel="canonical" href="http://blog.guojinlong.me/archives/2017/03/">
+    <link rel="canonical" href="http://blog.guojinlong.me/tags/MongoDB/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -43,7 +43,7 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "false" data-istags="false
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "false" data-istags="true
 " data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -160,201 +160,21 @@
 
 
 <div class="post-preview "
-     style="background-image: url('http://oc91dzfkp.bkt.clouddn.com/home-bg.jpg')">
-    <a href="/2017/03/18/js-module/">
+     style="background-image: url('http://oc91dzfkp.bkt.clouddn.com/blog/header/170601.jpg')">
+    <a href="/2017/06/01/MongoDB-Data-Type/">
         <h2 class="post-title">
-            javascript的模块化之路
+            MongoDB 数据类型
         </h2>
         <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-03-18
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-06-01
         </p>
         
         <div class="post-content-preview">
             <p>
                 
-模块化是js中时常被讨论的一个话题，同时模块化也是一门编程语言重要的组成部分。松散耦合的编程方式可以让代码的维护性能得到大大的提升。装逼一点说，可能模块化就是要让一些js代码片段可以成为更好的独立个体。
+MongoDB的文档和JavaScript中的对象相近，可以认为他类似于JSON。JSON大致有6种数据类型，有点是易于理解、解析、和记忆但同时表达能力也有一定局限。举个例子：1、因为没有日期类型，使得本来可以简单的处理日期类型变得复杂。2、同时不区分浮点型和整形、32位和64位。
 
-1. js的模块化血泪史因为js语言的特性，它不存在class类，也没有模块化之说。就算..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('http://oc91dzfkp.bkt.clouddn.com/blog/header/header0316.jpg')">
-    <a href="/2017/03/16/js-data-type/">
-        <h2 class="post-title">
-            数据类型
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-03-16
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                1. 七种数据类型1. 数值（number） 2. 字符串（string）3. 布尔值（boolean）4. undefined 表示为定义或者不存在，即此处没有任何值。5. null 表示定义了变量但是没有赋值。（好比打麻将三缺一的那位就是null）。6. 对象（object）  在对象中又可..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('http://oc91dzfkp.bkt.clouddn.com/blog/rebase_top.jpg')">
-    <a href="/2017/03/15/merge-rebase/">
-        <h2 class="post-title">
-            merge&rebase
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-03-15
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                
-使用git开发，可能会遇到类似情况，有一个develop分支，然后基于这个分支你开了一个新的分支(feature1)的分支开发新功能，同时可能有人在向develop分支提交代码，那么在你将feature1分支准备merge到develop分支的时候，可能会出现冲突。这个时候一个好东西就来了，在..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('http://oc91dzfkp.bkt.clouddn.com/blog/3.14.jpg')">
-    <a href="/2017/03/14/events/">
-        <h2 class="post-title">
-            events模块
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-03-14
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                
-回调函数模式让 Node 可以处理异步操作。但是，为了适应回调函数，异步操作只能有两个状态：开始和结束。对于那些多状态的异步操作（状态1，状态2，状态3，……），回调函数就会无法处理，你不得不将异步操作拆开，分成多个阶段。每个阶段结束时，调用下一个回调函数。为了解决这个问题，Node 提供 E..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('http://oc91dzfkp.bkt.clouddn.com/cat.jpg')">
-    <a href="/2017/03/13/20170313-export/">
-        <h2 class="post-title">
-            Node中module.exports和exports
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-03-13
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                
-node作为运行在服务端运行的javascript语言，对模块化的要求会变得急迫。相对于java中的类文件和包机制，Ruby的require，如果还是用 &lt; script &gt; 方式引入代码就会有那么些许尴尬。
-
-npm和CommonJSnode使用npm作为包管理工具。npm遵循C..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('http://oc91dzfkp.bkt.clouddn.com/banner.jpg')">
-    <a href="/2017/03/12/create-blog/">
-        <h2 class="post-title">
-            使用hexo在github搭建博客
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-03-12
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                
-
-博客使用Markdown语法
-会基本的git操作
-使用hexo创建博客内容
-
-
-
-环境准备
-安装git和nodejs环境
-注册好github同时将本地的git配置好
-
-创建blog
-在github上创建一个叫xxx.github.io的respository。（xxx就是你注册github的..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('http://oc91dzfkp.bkt.clouddn.com/home-bg.jpg')">
-    <a href="/2017/03/12/test/">
-        <h2 class="post-title">
-            test
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-03-12
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                test …..
-
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview "
-     style="background-image: url('')">
-    <a href="/2017/03/12/hello-world/">
-        <h2 class="post-title">
-            Hello World
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-03-12
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer i..
+1. M..
             </p>
         </div>
     </a>

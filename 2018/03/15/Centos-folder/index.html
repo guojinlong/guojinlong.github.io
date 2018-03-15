@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        merge&amp;rebase｜Guojinlong&#39;s blog
+        CentOS 目录结构｜Guojinlong&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="http://blog.guojinlong.me/2017/03/15/merge-rebase/">
+    <link rel="canonical" href="http://blog.guojinlong.me/2018/03/15/Centos-folder/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -136,13 +136,13 @@
 
 
 <img class="wechat-title-img"
-     src="http://oc91dzfkp.bkt.clouddn.com/blog/rebase_top.jpg">
+     src="http://oc91dzfkp.bkt.clouddn.com/blog/header/180315.jpg">
 
 
 <style>
     
     header.intro-header {
-        background-image: url('http://oc91dzfkp.bkt.clouddn.com/blog/rebase_top.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
+        background-image: url('http://oc91dzfkp.bkt.clouddn.com/blog/header/180315.jpg?imageView2/1/w/1400/h/400/interlace/1/q/90')
     }
 
     
@@ -153,18 +153,18 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>merge&amp;rebase</h1>
+                    <h1>CentOS 目录结构</h1>
                     
                     <span class="meta">
                          作者 Guo Jinlong
                         <span>
-                          日期 2017-03-15
+                          日期 2018-03-15
                          </span>
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#GIT"
-                           title="GIT">GIT</a>
+                        <a class="tag" href="/tags/#linux"
+                           title="linux">linux</a>
                         
                     </div>
                 </div>
@@ -173,7 +173,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            merge&rebase
+            CentOS 目录结构
         </span>
     </div>
 </header>
@@ -184,35 +184,73 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <blockquote>
-<p>使用git开发，可能会遇到类似情况，有一个develop分支，然后基于这个分支你开了一个新的分支(feature1)的分支开发新功能，同时可能有人在向develop分支提交代码，那么在你将feature1分支准备merge到develop分支的时候，可能会出现冲突。<br>这个时候一个好东西就来了，在你准备merge之前，可以在feature1的分支上做一个git rebase。</p>
+                <p>Liunx有很多的发行版本，但是各版本的目录结构都比较类似。这是因为有FHS的存在。简单来说就是用来规范大家对于相同类型的数据希望可以存放在一致的目录下。<br>FHS按照用户使用的频繁与否和是否允许用户随意改动，将目录定义为下面四种状：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align:left">可分享</th>
+<th style="text-align:left">不可分享</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>不可变</td>
+<td style="text-align:left">/usr</td>
+<td style="text-align:left">/etc</td>
+</tr>
+<tr>
+<td>不可变</td>
+<td style="text-align:left">/opt</td>
+<td style="text-align:left">/boot</td>
+</tr>
+<tr>
+<td>可变</td>
+<td style="text-align:left">/var/mail</td>
+<td style="text-align:left">/var/run</td>
+</tr>
+<tr>
+<td>可变</td>
+<td style="text-align:left">/var/spool/new</td>
+<td style="text-align:left">var/lock</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1-以CentOS-7-4目录结构为例"><a href="#1-以CentOS-7-4目录结构为例" class="headerlink" title="1.以CentOS 7.4目录结构为例"></a>1.以CentOS 7.4目录结构为例</h2><p>Liunx文件系统的目录结构，是Liunx的重要基础。理解Liunx的目录结构对了解Liunx有比较重要的作用。这里以CentOS7.4为例。解释相关的目录树。<br>Liunx下面，所有的文件与目录都是由根目录开始的。那是所有目录与文件的源头。然后再一个一个分支下来，有点像树枝状。所有我们也也可以叫这种配置方式为目录树。它有如下的特征：</p>
+<blockquote>
+<p>起始点都是根目录。/,root<br>每一个目录不只能使用本地端的文件系统，也可以使用网络上的文件系统。例如：可以利用NFS服务器挂载某些特定的目录等。<br>没一个文件在目录树种的文件名（包含路径）都是独一无二的。</p>
 </blockquote>
-<h3 id="1-什么是git-rebase？"><a href="#1-什么是git-rebase？" class="headerlink" title="1. 什么是git rebase？"></a>1. 什么是git rebase？</h3><p><a href="https://git-scm.com/book/zh/v1/Git-%E5%88%86%E6%94%AF-%E5%88%86%E6%94%AF%E7%9A%84%E8%A1%8D%E5%90%88" target="_blank" rel="external">来自git-scm对git rebase解释</a>，在这里作者把这个好东西叫做<strong>分支衍合</strong>。<br>以为下图为例子:<br><img src="http://oc91dzfkp.bkt.clouddn.com/blog/rebase1.png" alt="图1"></p>
-<ol>
-<li>如果现在我们在experiment上做这件事，首先它的操作是对experiment生效的，先明白这点。</li>
-<li>他们首先回到共同的爸爸(C2),在experiment分支上，C2过后的提交对象会生成一个补丁，这里补丁只包含C3。</li>
-<li>这个时候分支会会以master分支上最后提交的点(C4)作为出发点，逐步应用之前补丁中的提交。这个时候可能会有冲突之类，<a href="http://hmgle.github.io/git/2013/08/22/git-rebase.html" target="_blank" rel="external">解决冲突的办法</a>，直到rebase成功为止。</li>
-<li>这样改写了experiment的提交历史，可以理解为experiment分支是（类似）基于master的C4。这样可以保证experiment和master分支的同步，同时如果将experiment分支merge回master分支的时候会很方便，不会有冲突。<strong>但是，但是，但是一旦experiment合并或者发布到master分支，请之后千万不要再在experiment分支之后做rebase！！！</strong></li>
-</ol>
-<h3 id="2-git-rebase和git-merge的区别。"><a href="#2-git-rebase和git-merge的区别。" class="headerlink" title="2. git rebase和git merge的区别。"></a>2. git rebase和git merge的区别。</h3><p>在胡扯过rebase之后，可能感觉merge似乎差不多呀，那么他们到底是有啥区别？？？<br>相同：如果从合并的结果看，rebase和merge最终得到的合并内容是一模一样的。这点毋庸置疑。<br><strong>区别：（快后退，装逼开始了。。。）</strong><br>(rebase)它会把整个feature分支移动到master分支的后面，有效地把所有master分支上新的提交并入过来。但是，rebase为原分支上每一个提交创建一个新的提交，重写了项目历史，并且不会带来合并提交。<br>(merge)会引入必要的提交。要求合并进入的分支的commit log并不在最后合并的分支，最后只会有一个merge后提交的commit。</p>
-<h3 id="3-rebase的注意点⭐️⭐️⭐️"><a href="#3-rebase的注意点⭐️⭐️⭐️" class="headerlink" title="3. rebase的注意点⭐️⭐️⭐️"></a>3. rebase的注意点⭐️⭐️⭐️</h3><ol>
-<li>使用rebase有一个非常非常重要的准则。<br> <strong>一旦分支中的提交对象发布到公共仓库，就千万不要对该分支进行衍合操作。</strong></li>
-<li>上面说到rebase会把两个分支的提交都保留，这既是好的也是坏的，好的是保留了所有提交记录。坏的是并不知道这些commit是来自哪个分支的。（所以好坏有时候也是说不准的）</li>
-</ol>
-<h3 id="4-为什么要遵循上面说到的准则？"><a href="#4-为什么要遵循上面说到的准则？" class="headerlink" title="4. 为什么要遵循上面说到的准则？"></a>4. 为什么要遵循上面说到的准则？</h3><p>这个问题很简单，那我们就看一下不按照准备来做的后果：<br><img src="http://oc91dzfkp.bkt.clouddn.com/blog/rebase2.png" alt="图2"><br>首先公司有一个C1的master分支，然后在我们自己本地基于这个分支在我自己的分支上开发了C2,C3<br><img src="http://oc91dzfkp.bkt.clouddn.com/blog/rebase3.png" alt="图3"><br>你的同事同样基于C1开发了C5,并把他开发的代码merge到了master分支，得到了C6,这个时候你从服务器上merge了C6到你的分支得到了C7。<br><img src="http://oc91dzfkp.bkt.clouddn.com/blog/rebase4.png" alt="图4"><br>这个时候，你的同事在自己分支又继续开发自己的东西，然后突然发现一个叫rebase的好东西，这个时候再提交的时候，他决定用rebase试试了（请注意这个安装剧情发展这个地方的操作就是违反了我们说的准则了），然后他就强行把他的修改和rebase的东西一起提交到了master分支(git push –force)。<br>下载更新后需要合并，但此时衍合产生的提交对象 C4’ 的 SHA-1 校验值和之前 C4 完全不同，所以 Git 会把它们当作新的提交对象处理，而实际上此刻你的提交历史 C7 中早已经包含了 C4 的修改内容，于是合并操作会把 C7 和 C4’ 合并为 C8。<br><img src="http://oc91dzfkp.bkt.clouddn.com/blog/rebase5.png" alt="图5"><br>C8 这一步的合并是迟早会发生的，因为只有这样你才能和其他协作者提交的内容保持同步。而在 C8 之后，你的提交历史里就会同时包含 C4 和 C4’，两者有着不同的 SHA-1 校验值，如果用 git log 查看历史，会看到两个提交拥有相同的作者日期与说明，令人费解。而更糟的是，当你把这样的历史推送到服务器后，会再次把这些衍合后的提交引入到中央服务器，进一步困扰其他人<br>例子中，出问题的责任方是那个发布了 C6 后又用衍合发布 C4’ 的人，其他人会因此反馈双重历史到共享主干，从而混淆大家的视听。</p>
-<h3 id="5-什么时候使用rebase"><a href="#5-什么时候使用rebase" class="headerlink" title="5. 什么时候使用rebase"></a>5. 什么时候使用rebase</h3><p>正常情况，如果我们在一个新的分支开发，同时你没有将你开发的提交发布到公共分支。那么在你准备发布到公共分支之前使用rebase可能是最佳实践。一旦发布你的分支代码到公共分支。（<strong>切记不要再使用rebase</strong>）</p>
+<h2 id="2-具体目录详解"><a href="#2-具体目录详解" class="headerlink" title="2.具体目录详解"></a>2.具体目录详解</h2><h3 id=""><a href="#" class="headerlink" title="/"></a>/</h3><p>所有文件目录的起始点</p>
+<h3 id="bin"><a href="#bin" class="headerlink" title="/bin"></a>/bin</h3><p>可执行二进制文件目录。常用的命令都在这个目录下。 这个目录会软链接到usr/bin下</p>
+<h3 id="boot"><a href="#boot" class="headerlink" title="/boot"></a>/boot</h3><p>放置系统启动时用到的一些文件。/boot/vmlinuz为linux的内核文件，以及/boot/gurb引导装载程序</p>
+<h3 id="data"><a href="#data" class="headerlink" title="/data"></a>/data</h3><h3 id="dev"><a href="#dev" class="headerlink" title="/dev"></a>/dev</h3><p>任何设备和接口设备都是以文件的形式存在于这个目录当中。你只要通过访问这个目录下的某个文件，就等于访问某个设备。例如：/dev/null,/dev/zero,/dev/tty,/dev/lp<em>,/dev/hd</em>,/dev/sd*</p>
+<h3 id="etc"><a href="#etc" class="headerlink" title="/etc"></a>/etc</h3><p>系统的主要配置文件几乎都是放置在这个目录内。例如人员的账号密码文件、各种服务的起始文件等。<br>一般建议不要放置可执行文件在这个目录中。<br>比较重要的几个目录：<br>/etc/init.d/<br>/etc/xinetd.d/<br>/etc/X11/<br>/etc/sysconfig/<br>/etc/fstab/<br>/etc/inittab/</p>
+<h3 id="home"><a href="#home" class="headerlink" title="/home"></a>/home</h3><p>系统默认的用户组文件夹。一般创建用户账户的时候，默认的用户主文件夹在这里。~</p>
+<h3 id="lib"><a href="#lib" class="headerlink" title="/lib"></a>/lib</h3><p>放置开机时候会用到的函数库，和/bin、/sbin下面的命令会调用到的函数库</p>
+<h3 id="lib64"><a href="#lib64" class="headerlink" title="/lib64"></a>/lib64</h3><p>同上</p>
+<h3 id="lost-found"><a href="#lost-found" class="headerlink" title="/lost+found"></a>/lost+found</h3><p>ext2/3文件系统格式会产生的目录。在系统发生错误的时候会将一些丢失的片段放置在这个目录下。通常在分区的最顶层。</p>
+<h3 id="media"><a href="#media" class="headerlink" title="/media"></a>/media</h3><p>放置一些可删除设备。软盘、光盘、DVD等。</p>
+<h3 id="mnt"><a href="#mnt" class="headerlink" title="/mnt"></a>/mnt</h3><p>暂时挂载某些设备的存放地。</p>
+<h3 id="opt"><a href="#opt" class="headerlink" title="/opt"></a>/opt</h3><p>第三方软件放置的目录</p>
+<h3 id="proc"><a href="#proc" class="headerlink" title="/proc"></a>/proc</h3><p>虚拟文件系统。放置的数据都在内存中。不占用硬盘空间。</p>
+<h3 id="root"><a href="#root" class="headerlink" title="/root"></a>/root</h3><p>系统管理员的主文件夹目录  </p>
+<h3 id="run"><a href="#run" class="headerlink" title="/run"></a>/run</h3><h3 id="sbin"><a href="#sbin" class="headerlink" title="/sbin"></a>/sbin</h3><p>用来设置系统环境的命令。一般只有root才能够来用。  </p>
+<h3 id="srv"><a href="#srv" class="headerlink" title="/srv"></a>/srv</h3><p>service缩写。网络服务启动后，需要去用的数据目录。 www,FTP等。</p>
+<h3 id="sys"><a href="#sys" class="headerlink" title="/sys"></a>/sys</h3><p>和proc类似。但是用来记录和内核相关的信息。 </p>
+<h3 id="tmp"><a href="#tmp" class="headerlink" title="/tmp"></a>/tmp</h3><p>临时存放目录任何用户都可以看到</p>
+<h3 id="var"><a href="#var" class="headerlink" title="/var"></a>/var</h3><p>于系统运作有关</p>
+<h3 id="usr"><a href="#usr" class="headerlink" title="/usr"></a>/usr</h3><p>和软件安装还有执行有关 </p>
 
                 <hr>
                 
                 <!-- 多说 Share start -->
                 <div class="ds-share"
                      style="text-align: right"
-                     data-thread-key="2017/03/15/merge-rebase/"
-                     data-title="merge&amp;rebase"
-                     data-url="http://blog.guojinlong.me/2017/03/15/merge-rebase/"
-                     data-images="http://blog.guojinlong.me/2017/03/15/merge-rebase/http://oc91dzfkp.bkt.clouddn.com/blog/rebase_top.jpg"
-                     data-content="
-使用git开发，可能会遇到类似情况，有一个develop分支，然后基于这个分支你开了一个新的... | Guojinlong&#39;s blog ">
+                     data-thread-key="2018/03/15/Centos-folder/"
+                     data-title="CentOS 目录结构"
+                     data-url="http://blog.guojinlong.me/2018/03/15/Centos-folder/"
+                     data-images="http://blog.guojinlong.me/2018/03/15/Centos-folder/http://oc91dzfkp.bkt.clouddn.com/blog/header/180315.jpg"
+                     data-content="Liunx有很多的发行版本，但是各版本的目录结构都比较类似。这是因为有FHS的存在。简单来说就... | Guojinlong&#39;s blog ">
                     <div class="ds-share-inline">
                         <ul class="ds-share-icons-16">
                             <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
@@ -230,15 +268,10 @@
 
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2017/03/16/js-data-type/" data-toggle="tooltip" data-placement="top"
-                           title="数据类型">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2017/03/14/events/" data-toggle="tooltip" data-placement="top"
-                           title="events模块">Next Post &rarr;</a>
+                        <a href="/2017/06/01/MongoDB-Data-Type/" data-toggle="tooltip" data-placement="top"
+                           title="MongoDB 数据类型">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -247,9 +280,9 @@
                 <!-- 多说评论框 start -->
                 <div class="comment">
                     <div class="ds-thread"
-                         data-thread-key="2017/03/15/merge-rebase/"
-                         data-title="merge&amp;rebase"
-                         data-url="http://blog.guojinlong.me/2017/03/15/merge-rebase/">
+                         data-thread-key="2018/03/15/Centos-folder/"
+                         data-title="CentOS 目录结构"
+                         data-url="http://blog.guojinlong.me/2018/03/15/Centos-folder/">
                     </div>
                 </div>
                 <!-- 多说评论框 end -->
@@ -261,7 +294,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-什么是git-rebase？"><span class="toc-text">1. 什么是git rebase？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-git-rebase和git-merge的区别。"><span class="toc-text">2. git rebase和git merge的区别。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-rebase的注意点⭐️⭐️⭐️"><span class="toc-text">3. rebase的注意点⭐️⭐️⭐️</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-为什么要遵循上面说到的准则？"><span class="toc-text">4. 为什么要遵循上面说到的准则？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-什么时候使用rebase"><span class="toc-text">5. 什么时候使用rebase</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-以CentOS-7-4目录结构为例"><span class="toc-text">1.以CentOS 7.4目录结构为例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-具体目录详解"><span class="toc-text">2.具体目录详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#"><span class="toc-text">/</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bin"><span class="toc-text">/bin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#boot"><span class="toc-text">/boot</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#data"><span class="toc-text">/data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dev"><span class="toc-text">/dev</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#etc"><span class="toc-text">/etc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#home"><span class="toc-text">/home</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lib"><span class="toc-text">/lib</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lib64"><span class="toc-text">/lib64</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lost-found"><span class="toc-text">/lost+found</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#media"><span class="toc-text">/media</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mnt"><span class="toc-text">/mnt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#opt"><span class="toc-text">/opt</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#proc"><span class="toc-text">/proc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#root"><span class="toc-text">/root</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#run"><span class="toc-text">/run</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sbin"><span class="toc-text">/sbin</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#srv"><span class="toc-text">/srv</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sys"><span class="toc-text">/sys</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#tmp"><span class="toc-text">/tmp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#var"><span class="toc-text">/var</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#usr"><span class="toc-text">/usr</span></a></li></ol></li></ol>
                 </div>
             </div>
         </div>
@@ -283,8 +316,8 @@
                     </h5>
                     <div class="tags">
                         
-                        <a class="tag" href="/tags/#GIT"
-                           title="GIT">GIT</a>
+                        <a class="tag" href="/tags/#linux"
+                           title="linux">linux</a>
                         
                     </div>
                 </section>

@@ -440,7 +440,7 @@
     
         <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=events模块&url=http://blog.guojinlong.me/2017/03/14/events/index.html&pic=http://blog.guojinlong.me/img/favicon.png&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
-                شارك على Weibo
+                Auf Weibo teilen
             </li>
         </a>
     
@@ -449,7 +449,7 @@
     
         <a class="post_share-link" href="https://twitter.com/intent/tweet?text=events模块&url=http://blog.guojinlong.me/2017/03/14/events/index.html&via=Guo Jinlong" target="_blank">
             <li class="mdl-menu__item">
-                شارك على Twitter
+                Auf Twitter teilen
             </li>
         </a>
     
@@ -458,7 +458,7 @@
     
         <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.guojinlong.me/2017/03/14/events/index.html" target="_blank">
             <li class="mdl-menu__item">
-                شارك على Facebook
+                Auf Facebook teilen
             </li>
         </a>
     
@@ -467,7 +467,7 @@
     
         <a class="post_share-link" href="https://plus.google.com/share?url=http://blog.guojinlong.me/2017/03/14/events/index.html" target="_blank">
             <li class="mdl-menu__item">
-                شارك على Google+
+                Auf Google+ teilen
             </li>
         </a>
     
@@ -493,8 +493,8 @@
         <blockquote>
 <p>回调函数模式让 Node 可以处理异步操作。但是，为了适应回调函数，异步操作只能有两个状态：开始和结束。对于那些多状态的异步操作（状态1，状态2，状态3，……），回调函数就会无法处理，你不得不将异步操作拆开，分成多个阶段。每个阶段结束时，调用下一个回调函数。<br>为了解决这个问题，Node 提供 Event Emitter 接口。通过事件，解决多状态异步操作的响应问题。<br>———《JavaScript标准参考教程》</p>
 </blockquote>
-<h3 id="1-Event-Emitter"><a href="#1-Event-Emitter" class="headerlink" title="1.Event Emitter"></a>1.Event Emitter</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="meta">'use strict'</span></div><div class="line"><span class="keyword">const</span> EventEmitter =  <span class="built_in">require</span>(<span class="string">'events'</span>).EventEmitter;</div><div class="line"><span class="keyword">const</span> emitter =  <span class="keyword">new</span> EventEmitter();</div><div class="line"></div><div class="line">emitter.on(<span class="string">'test'</span>, ()=&gt;&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'test&gt;&gt;&gt;&gt;'</span>);</div><div class="line">&#125;)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'&gt;&gt;&gt;&gt;1'</span>);</div><div class="line">  emitter.emit(<span class="string">'test'</span>);</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'&gt;&gt;&gt;&gt;&gt;2'</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">f();</div><div class="line"><span class="comment">//这是一段同步执行的代码</span></div></pre></td></tr></table></figure>
-<h3 id="2-Event-Emitter-接口的部署"><a href="#2-Event-Emitter-接口的部署" class="headerlink" title="2.Event Emitter 接口的部署"></a>2.Event Emitter 接口的部署</h3><p>Emitter接口可以部署在任何对象上，然后使这些对象可以订阅和发布消息。<br>同时在util模块中有inherits方法也提供了类型是的继承方法。<br><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">util.inherits(对象, EventEmitter);</div></pre></td></tr></table></figure></p>
+<h3 id="1-Event-Emitter"><a href="#1-Event-Emitter" class="headerlink" title="1.Event Emitter"></a>1.Event Emitter</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="meta">'use strict'</span></span><br><span class="line"><span class="keyword">const</span> EventEmitter =  <span class="built_in">require</span>(<span class="string">'events'</span>).EventEmitter;</span><br><span class="line"><span class="keyword">const</span> emitter =  <span class="keyword">new</span> EventEmitter();</span><br><span class="line"></span><br><span class="line">emitter.on(<span class="string">'test'</span>, ()=&gt;&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'test&gt;&gt;&gt;&gt;'</span>);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'&gt;&gt;&gt;&gt;1'</span>);</span><br><span class="line">  emitter.emit(<span class="string">'test'</span>);</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'&gt;&gt;&gt;&gt;&gt;2'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">f();</span><br><span class="line"><span class="comment">//这是一段同步执行的代码</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-Event-Emitter-接口的部署"><a href="#2-Event-Emitter-接口的部署" class="headerlink" title="2.Event Emitter 接口的部署"></a>2.Event Emitter 接口的部署</h3><p>Emitter接口可以部署在任何对象上，然后使这些对象可以订阅和发布消息。<br>同时在util模块中有inherits方法也提供了类型是的继承方法。<br><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">util.inherits(对象, EventEmitter);</span><br></pre></td></tr></table></figure></p>
 <h3 id="3-Event-Emitter-的实例方法"><a href="#3-Event-Emitter-的实例方法" class="headerlink" title="3.Event Emitter 的实例方法"></a>3.Event Emitter 的实例方法</h3><ul>
 <li><strong>emitter.on(name, f)</strong> 对事件name指定监听函数f</li>
 <li><strong>emitter.emit(name, a1,a2…)</strong> 用来触发事件。它的第一个参数是事件名称，其余参数都会依次传入回调函数。</li>
@@ -530,7 +530,7 @@
                 <i class="material-icons">arrow_back</i>
             </button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            أحدث
+            Neuren
         </a>
     
 
@@ -540,7 +540,7 @@
     <!-- Next Nav -->
     
         <a href="/2017/03/13/20170313-export/" id="post_nav-older" class="next-content">
-            أقدم
+            Älteren
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
                 <i class="material-icons">arrow_forward</i>
@@ -613,7 +613,7 @@
                 
                     <i class="material-icons sidebar-material-icons">home</i>
                 
-                الرئيسية
+                Home
             </a>
         </li>
         
@@ -626,7 +626,7 @@
                 
                     <i class="material-icons sidebar-material-icons">inbox</i>
                 
-                    أرشيف
+                    Archive
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
@@ -668,7 +668,7 @@ It will not impact the appearance and can give developers a lot of support :)
 
     <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
         <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
-            سمة - Material
+            Theme - Material
             <span class="sidebar-badge badge-circle">i</span>
         </div>
     </a>

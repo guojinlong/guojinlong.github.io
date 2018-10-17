@@ -440,7 +440,7 @@
     
         <a class="post_share-link" href="http://service.weibo.com/share/share.php?appkey=&title=merge&amp;rebase&url=http://blog.guojinlong.me/2017/03/15/merge-rebase/index.html&pic=http://blog.guojinlong.me/img/favicon.png&searchPic=false&style=simple" target="_blank">
             <li class="mdl-menu__item">
-                شارك على Weibo
+                Auf Weibo teilen
             </li>
         </a>
     
@@ -449,7 +449,7 @@
     
         <a class="post_share-link" href="https://twitter.com/intent/tweet?text=merge&amp;rebase&url=http://blog.guojinlong.me/2017/03/15/merge-rebase/index.html&via=Guo Jinlong" target="_blank">
             <li class="mdl-menu__item">
-                شارك على Twitter
+                Auf Twitter teilen
             </li>
         </a>
     
@@ -458,7 +458,7 @@
     
         <a class="post_share-link" href="https://www.facebook.com/sharer/sharer.php?u=http://blog.guojinlong.me/2017/03/15/merge-rebase/index.html" target="_blank">
             <li class="mdl-menu__item">
-                شارك على Facebook
+                Auf Facebook teilen
             </li>
         </a>
     
@@ -467,7 +467,7 @@
     
         <a class="post_share-link" href="https://plus.google.com/share?url=http://blog.guojinlong.me/2017/03/15/merge-rebase/index.html" target="_blank">
             <li class="mdl-menu__item">
-                شارك على Google+
+                Auf Google+ teilen
             </li>
         </a>
     
@@ -493,11 +493,11 @@
         <blockquote>
 <p>使用git开发，可能会遇到类似情况，有一个develop分支，然后基于这个分支你开了一个新的分支(feature1)的分支开发新功能，同时可能有人在向develop分支提交代码，那么在你将feature1分支准备merge到develop分支的时候，可能会出现冲突。<br>这个时候一个好东西就来了，在你准备merge之前，可以在feature1的分支上做一个git rebase。</p>
 </blockquote>
-<h3 id="1-什么是git-rebase？"><a href="#1-什么是git-rebase？" class="headerlink" title="1. 什么是git rebase？"></a>1. 什么是git rebase？</h3><p><a href="https://git-scm.com/book/zh/v1/Git-%E5%88%86%E6%94%AF-%E5%88%86%E6%94%AF%E7%9A%84%E8%A1%8D%E5%90%88" target="_blank" rel="external">来自git-scm对git rebase解释</a>，在这里作者把这个好东西叫做<strong>分支衍合</strong>。<br>以为下图为例子:<br><img src="http://oc91dzfkp.bkt.clouddn.com/blog/rebase1.png" alt="图1"></p>
+<h3 id="1-什么是git-rebase？"><a href="#1-什么是git-rebase？" class="headerlink" title="1. 什么是git rebase？"></a>1. 什么是git rebase？</h3><p><a href="https://git-scm.com/book/zh/v1/Git-%E5%88%86%E6%94%AF-%E5%88%86%E6%94%AF%E7%9A%84%E8%A1%8D%E5%90%88" target="_blank" rel="noopener">来自git-scm对git rebase解释</a>，在这里作者把这个好东西叫做<strong>分支衍合</strong>。<br>以为下图为例子:<br><img src="http://oc91dzfkp.bkt.clouddn.com/blog/rebase1.png" alt="图1"></p>
 <ol>
 <li>如果现在我们在experiment上做这件事，首先它的操作是对experiment生效的，先明白这点。</li>
 <li>他们首先回到共同的爸爸(C2),在experiment分支上，C2过后的提交对象会生成一个补丁，这里补丁只包含C3。</li>
-<li>这个时候分支会会以master分支上最后提交的点(C4)作为出发点，逐步应用之前补丁中的提交。这个时候可能会有冲突之类，<a href="http://hmgle.github.io/git/2013/08/22/git-rebase.html" target="_blank" rel="external">解决冲突的办法</a>，直到rebase成功为止。</li>
+<li>这个时候分支会会以master分支上最后提交的点(C4)作为出发点，逐步应用之前补丁中的提交。这个时候可能会有冲突之类，<a href="http://hmgle.github.io/git/2013/08/22/git-rebase.html" target="_blank" rel="noopener">解决冲突的办法</a>，直到rebase成功为止。</li>
 <li>这样改写了experiment的提交历史，可以理解为experiment分支是（类似）基于master的C4。这样可以保证experiment和master分支的同步，同时如果将experiment分支merge回master分支的时候会很方便，不会有冲突。<strong>但是，但是，但是一旦experiment合并或者发布到master分支，请之后千万不要再在experiment分支之后做rebase！！！</strong></li>
 </ol>
 <h3 id="2-git-rebase和git-merge的区别。"><a href="#2-git-rebase和git-merge的区别。" class="headerlink" title="2. git rebase和git merge的区别。"></a>2. git rebase和git merge的区别。</h3><p>在胡扯过rebase之后，可能感觉merge似乎差不多呀，那么他们到底是有啥区别？？？<br>相同：如果从合并的结果看，rebase和merge最终得到的合并内容是一模一样的。这点毋庸置疑。<br><strong>区别：（快后退，装逼开始了。。。）</strong><br>(rebase)它会把整个feature分支移动到master分支的后面，有效地把所有master分支上新的提交并入过来。但是，rebase为原分支上每一个提交创建一个新的提交，重写了项目历史，并且不会带来合并提交。<br>(merge)会引入必要的提交。要求合并进入的分支的commit log并不在最后合并的分支，最后只会有一个merge后提交的commit。</p>
@@ -532,7 +532,7 @@
                 <i class="material-icons">arrow_back</i>
             </button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            أحدث
+            Neuren
         </a>
     
 
@@ -542,7 +542,7 @@
     <!-- Next Nav -->
     
         <a href="/2017/03/14/events/" id="post_nav-older" class="next-content">
-            أقدم
+            Älteren
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon mdl-color--white mdl-color-text--grey-900" role="presentation">
                 <i class="material-icons">arrow_forward</i>
@@ -615,7 +615,7 @@
                 
                     <i class="material-icons sidebar-material-icons">home</i>
                 
-                الرئيسية
+                Home
             </a>
         </li>
         
@@ -628,7 +628,7 @@
                 
                     <i class="material-icons sidebar-material-icons">inbox</i>
                 
-                    أرشيف
+                    Archive
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
@@ -670,7 +670,7 @@ It will not impact the appearance and can give developers a lot of support :)
 
     <a href="https://github.com/viosey/hexo-theme-material"  class="sidebar-footer-text-a" target="_blank">
         <div class="sidebar-text mdl-button mdl-js-button mdl-js-ripple-effect sidebar-footer-text-div" data-upgraded=",MaterialButton,MaterialRipple">
-            سمة - Material
+            Theme - Material
             <span class="sidebar-badge badge-circle">i</span>
         </div>
     </a>
